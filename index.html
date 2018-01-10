@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>VueJS CRUD project By KK</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
+</head>
+<body>
+
+
+	<div id="root">
+
+		<div class="">
+			<div class="crud_header">
+				<h1 class="left">VueJS CRUD WITH PHP AND MySQL</h1>
+				<button class="right addnew" @click="showingModal = true;">Add New</button>
+				<div class="fix"></div>
+			</div>
+			
+			<hr>
+			<p class="errorMessage" v-if="errorMessage">{{errorMessage}}</p>
+			<p class="successMessage" v-if="successMessage">{{successMessage}}</p>
+
+			<table class="list">
+				<tr>
+					<th>ID</th>
+					<th>Username</th>
+					<th>Email</th>
+					<th>Phone Number</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+				<tr v-for="user in users">
+					<td>{{user.id}}</td>
+					<td>{{user.username}}</td>
+					<td>{{user.email}}</td>
+					<td>{{user.mobile}}</td>
+					<td><button @click="showingeditModal = true; selectUser(user)">Edit</button></td>
+					<td><button @click="showingdeleteModal = true; selectUser(user)" >Delete</button></td>
+				</tr>
+			</table>
+			<div class="fix"></div>
+			<div class="modal col-md-6" id="addmodal" v-if="showingModal">
+				<div class="modalheading">
+					<p class="left">Add new user</p>
+					<p class="right close" @click="showingModal = false;">x</p>
+					<div class="fix"></div>
+				</div>
+				<div class="modalbody">
+					<div class="modalcontent">
+						<table class="form">
+							<tr>
+								<th>Usename</th>
+								<th>:</th>
+								<td><input type="text" placeholder="Usename" v-model="newUser.username"></td>
+							</tr>
+							<tr>
+								<th>Email Adress</th>
+								<th>:</th>
+								<td><input type="email" placeholder="Email" v-model="newUser.email"></td>
+							</tr>
+							<tr>
+								<th>Phone Number</th>
+								<th>:</th>
+								<td><input type="text" placeholder="Phone" v-model="newUser.mobile"></td>
+							</tr>
+						</table>
+						<div class="margin"></div>
+						<button class="center"  @click="showingModal = false; saveUser();" >Add User</button>
+					</div>
+				</div>
+			</div>
+		<div class="modal col-md-6" id="editmodal" v-if="showingeditModal">
+				<div class="modalheading">
+					<p class="left">Edit user</p>
+					<p class="right close" @click="showingeditModal = false;">x</p>
+					<div class="fix"></div>
+				</div>
+				<div class="modalbody">
+					<div class="modalcontent">
+						<table class="form">
+							<tr>
+								<th>Usename</th>
+								<th>:</th>
+								<td><input type="text" placeholder="Username" v-model="clickedUser.username"></td>
+							</tr>
+							<tr>
+								<th>Email Adress</th>
+								<th>:</th>
+								<td><input type="email" placeholder="Email Adress" v-model="clickedUser.email"></td>
+							</tr>
+							<tr>
+								<th>Phone Number</th>
+								<th>:</th>
+								<td><input type="text" placeholder="Phone Number"  v-model="clickedUser.mobile"></td>
+							</tr>
+						</table>
+						<div class="margin"></div>
+						<button class="center"  @click="showingeditModal = false; updateUser()">Update User</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal col-md-6" id="deletemodal" v-if="showingdeleteModal">
+				<div class="modalheading">
+					<p class="left">Delete user</p>
+					<p class="right close" @click="showingdeleteModal = false;">x</p>
+					<div class="fix"></div>
+				</div>
+				<div class="modalbody">
+					<div class="modalcontent">
+						
+						<div class="margin"></div>
+						<h3 class="center">Are you sure to Delete?</h3>
+						<div class="margin"></div>
+						<h4 class="center">{{clickedUser.username}}</h4>
+						<div class="margin"></div>
+						<div class="col-md-6 center">
+							<button class="left" @click="showingdeleteModal = false; deleteUser()">YES</button>
+							<button class="right" @click="showingdeleteModal = false;">NO</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+	
+
+</body>
+</html>
